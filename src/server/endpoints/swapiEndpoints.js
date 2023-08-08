@@ -3,7 +3,9 @@ const _isWookieeFormat = req => req?.query?.format === 'wookiee'
 
 const BASE_URL = 'https://swapi.dev/api/';
 
-const _supportWookieFormat = (url, req) => url+(_isWookieeFormat(req)?'?format=wookiee':'')
+const WOOKIEE_FORMAT = '?format=wookiee';
+
+const _supportWookieFormat = (url, req) => url+(_isWookieeFormat(req)?WOOKIEE_FORMAT:'')
 
 const HTTP_METHODS = {
     GET: 'GET', POST: 'POST', PUT: 'PUT', DELETE: 'DELETE'
