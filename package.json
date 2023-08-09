@@ -15,6 +15,13 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon --watch ./src index.js"
+    "dev": "nodemon --watch ./src index.js",
+    "commitlint": "commitlint --edit"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.7.0",
+    "@commitlint/config-conventional": "^17.7.0",
+    "conventional-changelog-atom": "^3.0.0",
+    "husky": "^8.0.3"
   }
 }
