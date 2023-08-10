@@ -1,38 +1,43 @@
 
-const _isWookieeFormat = req => req?.query?.format === 'wookiee'
+const {
+    TEST,
+    GET_PEOPLE,
+    GET_PLANET,
+    GET_WEIGHT_ON_PLANET_RANDOM,
+    GET_LOGS,
+    HTTP_METHODS,
+    BASE_URL,
+    WOOKIEE_FORMAT,
+    WOOKIEE_QUERY_PARAM
+} = require('./constants')
 
-const BASE_URL = 'https://swapi.dev/api/';
-
-const WOOKIEE_FORMAT = '?format=wookiee';
+const _isWookieeFormat = req => req?.query?.format === WOOKIEE_QUERY_PARAM
 
 const _supportWookieFormat = (url, req) => url+(_isWookieeFormat(req)?WOOKIEE_FORMAT:'')
 
-const HTTP_METHODS = {
-    GET: 'GET', POST: 'POST', PUT: 'PUT', DELETE: 'DELETE'
-};
 
 
 
 const applySwapiEndpoints = (server, app) => {
 
-    server.get('/hfswapi/test', async (req, res) => {
+    server.get(TEST, async (req, res) => {
         const data = await app.swapiFunctions.genericRequest(_supportWookieFormat(BASE_URL, req), HTTP_METHODS.GET, null, true);
         res.send(data);
     });
 
-    server.get('/hfswapi/getPeople/:id', async (req, res) => {
+    server.get(`${GET_PEOPLE}/:id`, async (req, res) => {
         res.sendStatus(501);
     });
 
-    server.get('/hfswapi/getPlanet/:id', async (req, res) => {
+    server.get(`${GET_PLANET}/:id`, async (req, res) => {
         res.sendStatus(501);
     });
 
-    server.get('/hfswapi/getWeightOnPlanetRandom', async (req, res) => {
+    server.get(GET_WEIGHT_ON_PLANET_RANDOM, async (req, res) => {
         res.sendStatus(501);
     });
 
-    server.get('/hfswapi/getLogs',async (req, res) => {
+    server.get(GET_LOGS,async (req, res) => {
         const data = await app.db.logging.findAll();
         res.send(data);
     });
