@@ -19,6 +19,12 @@ for (const modelInit of models) {
 	db[model.name] = model;
 }
 
+db.swPlanet.hasMany(db.swPeople)
+db.swPeople.belongsTo(db.swPlanet)
+db.swPlanet.hasMany(db.swWookieePeople)
+db.swWookieePeople.belongsTo(db.swPlanet)
+
+
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
@@ -31,9 +37,22 @@ db.Sequelize = Sequelize;
 
 const initDB = async () => {
   await db.swPeople.sync({ force: true });
+  await db.swWookieePeople.sync({ force: true });
   await db.swPlanet.sync({ force: true });
   await db.logging.sync({ force: true });
 }
+
+// const createModels = async () => {
+//   await initDB()
+//   const a = await db.swPlanet.create({name:'tierra', gravity:10.0})
+//   const as = await db.swPlanet.findOne({where: {id: 1}});
+//   console.log(as.name)
+//   const b = await db.swPeople.create({id: 1, name: 'jann', mass: 15, height: 130})
+// }
+
+// (async ()=> {
+//   await createModels()
+// })()
 
 const populateDB = async () => {
   await db.swPlanet.bulkCreate([
