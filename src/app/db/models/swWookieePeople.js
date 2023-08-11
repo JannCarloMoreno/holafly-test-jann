@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {
-    const swPeople = sequelize.define(
-        'swPeople',{
+    const swWookieePeople = sequelize.define(
+        'swWookieePeople',{
             id: { type: DataTypes.INTEGER, primaryKey: true},
             name: DataTypes.STRING,
             mass: DataTypes.INTEGER,
@@ -14,5 +14,5 @@ module.exports = (sequelize, DataTypes) => {
             paranoid: true
         }
     );
-    return swPeople;
+    return swWookieePeople;
 };

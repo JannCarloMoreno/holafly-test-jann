@@ -5,10 +5,16 @@ class CommonPeople extends AbstractPeople {
         this.id = id
     }
 
-    async init({name, mass, height, homeworld_name, homeworld_id}){
-        let person = await swPeople.findOne({where: {id: this.id}})
-        if(!person) person = swPeople.create({id: this.id,name,mass, height, homeworld_name, homeworld_id})
-        return person
+    async init(){
+        const person = await swPeople.findOne({where: {id: this.id}})
+        if(person){
+            this.name = person.name
+            this.mass = person.mass
+            this.height = person.height
+            this.homeworldId = person.homeworldId
+            this.homeworldName = person.homeworldName
+        }
+        return this
     }
 }
 
