@@ -9,10 +9,12 @@ const {
     WOOKIEE_QUERY_PARAM,
     BASE_URL,
     HTTP_METHODS,
-    PEOPLE_URL
+    PEOPLE_URL,
+    PLANET_URL
 } = require('./constants')
 
 const {peopleFactory} = require('../../app/People')
+const {Planet} = require('../../app/Planet')
 
 const _isWookieeFormat = req => req?.query?.format === WOOKIEE_QUERY_PARAM
 
@@ -41,7 +43,15 @@ const applySwapiEndpoints = (server, app) => {
     });
 
     server.get(`${GET_PLANET}/:id`, async (req, res) => {
-        res.sendStatus(501);
+        const id = req?.params?.id
+        if(isNaN(parseInt(id))) return res.status(401).send('bad request')
+        let planet = new Planet(id)
+        await planet.init()
+        if(!planet.name){
+            const data = await app.swapiFunctions.genericRequest(`${BASE_URL}${PLANET_URL}${id}`, HTTP_METHODS.GET, null, true);
+            await planet.createInDb(data)
+        } 
+        res.status(200).send({name: planet.name, gravity: planet.gravity})
     });
 
     server.get(GET_WEIGHT_ON_PLANET_RANDOM, async (req, res) => {
