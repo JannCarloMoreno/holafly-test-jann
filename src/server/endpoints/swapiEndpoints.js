@@ -14,8 +14,6 @@ const {
 
 const {peopleFactory} = require('../../app/People')
 
-const {peopleController} = require('../controllers')
-
 const _isWookieeFormat = req => req?.query?.format === WOOKIEE_QUERY_PARAM
 
 const _supportWookieFormat = (url, req) => url+(_isWookieeFormat(req)?WOOKIEE_FORMAT:'')
