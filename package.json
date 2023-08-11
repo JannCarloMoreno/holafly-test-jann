@@ -9,7 +9,7 @@
     "sequelize-cli": "^6.4.1",
     "sqlite3": "^5.0.8"
   },
-  "name": "PruebaTecnicaHolafly",
+  "name": "prueba-tecnica-holafly",
   "version": "1.0.0",
   "description": "Prueba Técnica de Holafly",
   "main": "index.js",
