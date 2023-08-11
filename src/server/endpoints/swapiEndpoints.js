@@ -14,7 +14,7 @@ const {
 } = require('./constants')
 
 const {peopleFactory} = require('../../app/People')
-const Planet = require('../../app/Planet')
+const {Planet} = require('../../app/Planet')
 
 const _isWookieeFormat = req => req?.query?.format === WOOKIEE_QUERY_PARAM
 

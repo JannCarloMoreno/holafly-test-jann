@@ -12,7 +12,7 @@ const HTTP_METHODS = {
 
 const BASE_URL = 'https://swapi.dev/api/'
 const PEOPLE_URL = 'people/'
-const PLANET_URL = 'planet/'
+const PLANET_URL = 'planets/'
 module.exports = {
     TEST,
     GET_PEOPLE,

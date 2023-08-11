@@ -16,7 +16,7 @@ class Planet {
     async createInDb({name, gravity}){
         this.name = name
         this.gravity = parseFloat(gravity)
-        await swWookieePeople.create({id: this.id, name: this.name, gravity: this.gravity })
+        await swPlanet.create({id: this.id, name: this.name, gravity: this.gravity })
     }
 
     getName() {
