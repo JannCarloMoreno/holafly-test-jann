@@ -12,6 +12,7 @@ const HTTP_METHODS = {
 
 const BASE_URL = 'https://swapi.dev/api/'
 const PEOPLE_URL = 'people/'
+const PLANET_URL = 'planet/'
 module.exports = {
     TEST,
     GET_PEOPLE,
@@ -22,5 +23,6 @@ module.exports = {
     WOOKIEE_QUERY_PARAM,
     BASE_URL,
     HTTP_METHODS,
-    PEOPLE_URL
+    PEOPLE_URL,
+    PLANET_URL
 }
