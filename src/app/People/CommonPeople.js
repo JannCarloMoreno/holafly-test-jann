@@ -12,8 +12,8 @@ class CommonPeople extends AbstractPeople {
             this.name = person.name
             this.mass = person.mass
             this.height = person.height
-            this.homeworldId = person.homeworldId
-            this.homeworldName = person.homeworldName
+            this.homeworldId = person.homeworld_id
+            this.homeworldName = person.homeworld_name
         }
         return this
     }

@@ -20,6 +20,8 @@ const _isWookieeFormat = req => req?.query?.format === WOOKIEE_QUERY_PARAM
 
 const _supportWookieFormat = (url, req) => url+(_isWookieeFormat(req)?WOOKIEE_FORMAT:'')
 
+const _getPlanetId = (url) => url.split('/')[5]
+
 
 
 
@@ -36,10 +38,16 @@ const applySwapiEndpoints = (server, app) => {
         let person = await peopleFactory(id, _isWookieeFormat(req)?'wookiee':'')
         if(!person.name){
             const data = await app.swapiFunctions.genericRequest(_supportWookieFormat(`${BASE_URL}${PEOPLE_URL}${id}`, req), HTTP_METHODS.GET, null, true);
-            //TODO: Check planet data
-            await person.createInDb(data)
+            const homeworldId = _getPlanetId(data.homeworld)
+            const planet = new Planet(homeworldId)
+            await planet.init()
+            if(!planet.name){
+                const data = await app.swapiFunctions.genericRequest(`${BASE_URL}${PLANET_URL}${id}`, HTTP_METHODS.GET, null, true);
+                await planet.createInDb(data)
+            }
+            await person.createInDb({homeworldId, homeworldName: planet.name,...data})
         } 
-        res.status(200).send({id: person.id, name: person.name, mass: person.mass, height: person.height, homeworldId: person.homeworldId, homeworldName: person.homeworldName})
+        res.status(200).send({name: person.name, mass: person.mass, height: person.height, homeworldId: person.homeworldId, homeworldName: person.homeworldName})
     });
 
     server.get(`${GET_PLANET}/:id`, async (req, res) => {
