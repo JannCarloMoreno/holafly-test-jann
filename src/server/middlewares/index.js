@@ -1,4 +1,4 @@
-const loggingMiddleware = require('./loggingMiddleware');
+const loggingMiddleware = require('./loggingMiddleware')
 const checkDbMiddleware = require('./checkDbMiddleware')
 
 const applyMiddlwares = (server, app) => {

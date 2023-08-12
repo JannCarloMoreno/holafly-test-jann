@@ -16,6 +16,8 @@ const {
 const {peopleFactory} = require('../../app/People')
 const {Planet} = require('../../app/Planet')
 
+const asyncServer = require('./asyncErrorWrapper')
+
 const _isWookieeFormat = req => req?.query?.format === WOOKIEE_QUERY_PARAM
 
 const _supportWookieFormat = (url, req) => url+(_isWookieeFormat(req)?WOOKIEE_FORMAT:'')
@@ -29,7 +31,9 @@ const _getRandomInt = max => Math.floor(Math.random() * max)
 
 const applySwapiEndpoints = (server, app) => {
 
+    server = asyncServer(server)
     server.get(TEST, async (req, res) => {
+        throw new Error('paila socio se estallo esa monda')
         const data = await app.swapiFunctions.genericRequest(_supportWookieFormat(BASE_URL, req), HTTP_METHODS.GET, null, true);
         res.send(data);
     });
