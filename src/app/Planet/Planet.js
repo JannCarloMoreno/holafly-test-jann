@@ -15,7 +15,7 @@ class Planet {
 
     async createInDb({name, gravity}){
         this.name = name
-        this.gravity = parseFloat(gravity)
+        this.gravity = isNaN(parseFloat(gravity))?0:parseFloat(gravity)
         await swPlanet.create({id: this.id, name: this.name, gravity: this.gravity })
     }
 

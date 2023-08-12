@@ -20,8 +20,8 @@ class WookieePeople extends AbstractPeople {
 
     async createInDb({whrascwo, scracc, acwoahrracao, homeworldId, homeworldName}){
         this.name = whrascwo
-        this.mass = parseInt(scracc)
-        this.height = parseInt(acwoahrracao)
+        this.mass = isNaN(parseInt(scracc))?0:parseInt(scracc)
+        this.height = isNaN(parseInt(acwoahrracao))?0:parseInt(acwoahrracao)
         this.homeworldId = homeworldId
         this.homeworldName = homeworldName
         await swWookieePeople.create({id: this.id, name: this.name, mass: this.mass, height: this.height,homeworld_id: this.homeworldId, homeworld_name: this.homeworldName })

@@ -20,8 +20,8 @@ class CommonPeople extends AbstractPeople {
 
     async createInDb({name, mass, height, homeworldId, homeworldName}){
         this.name = name
-        this.mass = parseInt(mass)
-        this.height = parseInt(height)
+        this.mass = isNaN(parseInt(mass))?0:parseInt(mass)
+        this.height = isNaN(parseInt(height))?0:parseInt(height)
         this.homeworldId = homeworldId
         this.homeworldName = homeworldName
         await swPeople.create({id: this.id, name: this.name, mass: this.mass, height: this.height,homeworld_id: this.homeworldId, homeworld_name: this.homeworldName })
