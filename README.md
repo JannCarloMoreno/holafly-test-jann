@@ -75,5 +75,10 @@ Adicionalmente a estos endpoints, se requiere ampliar el paquete `People` con la
 Las siguientes librerias fueron usadas para manejar el linteo de mensajes de commit
  - [commitlint](https://commitlint.js.org/#/): linteo para mensajes de commit
  - [husky](https://typicode.github.io/husky/): librería para gestion de git hooks
+
+Las siguientes librerias fueron usadas para lintear y manejar formato en el codigo
  - [eslint](https://eslint.org): libreria para linteo de código y fijación de formato
+  - [husky](https://typicode.github.io/husky/): librería para gestion de git hooks
+
+Las siguientes librerias se agregaron con el fin de validar parametros de las peticiones
  - [express-validator](https://express-validator.github.io/docs): libreria para agregar validaciones a los parametros
