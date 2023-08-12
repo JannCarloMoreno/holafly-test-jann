@@ -42,7 +42,7 @@ const applySwapiEndpoints = (server, app) => {
             const planet = new Planet(homeworldId)
             await planet.init()
             if(!planet.name){
-                const data = await app.swapiFunctions.genericRequest(`${BASE_URL}${PLANET_URL}${id}`, HTTP_METHODS.GET, null, true);
+                const data = await app.swapiFunctions.genericRequest(`${BASE_URL}${PLANET_URL}${homeworldId}`, HTTP_METHODS.GET, null, true);
                 await planet.createInDb(data)
             }
             await person.createInDb({homeworldId, homeworldName: planet.name,...data})
