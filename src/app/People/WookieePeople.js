@@ -24,7 +24,14 @@ class WookieePeople extends AbstractPeople {
     this.height = isNaN(parseInt(acwoahrracao)) ? 0 : parseInt(acwoahrracao)
     this.homeworldId = homeworldId
     this.homeworldName = homeworldName
-    await swWookieePeople.create({ id: this.id, name: this.name, mass: this.mass, height: this.height, homeworld_id: this.homeworldId, homeworld_name: this.homeworldName })
+    await swWookieePeople.create({
+      id: this.id,
+      name: this.name,
+      mass: this.mass,
+      height: this.height,
+      homeworld_id: this.homeworldId,
+      homeworld_name: this.homeworldName
+    })
   }
 }
 

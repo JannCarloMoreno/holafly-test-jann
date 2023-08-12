@@ -1,5 +1,4 @@
 const BASE_PATH = '/hfswapi'
-const TEST = `${BASE_PATH}/test`
 const GET_PEOPLE = `${BASE_PATH}/getPeople`
 const GET_PLANET = `${BASE_PATH}/getPlanet`
 const GET_WEIGHT_ON_PLANET_RANDOM = `${BASE_PATH}/getWeightOnPlanetRandom`
@@ -14,7 +13,6 @@ const BASE_URL = 'https://swapi.dev/api/'
 const PEOPLE_URL = 'people/'
 const PLANET_URL = 'planets/'
 module.exports = {
-  TEST,
   GET_PEOPLE,
   GET_PLANET,
   GET_WEIGHT_ON_PLANET_RANDOM,

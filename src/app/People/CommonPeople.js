@@ -24,7 +24,14 @@ class CommonPeople extends AbstractPeople {
     this.height = isNaN(parseInt(height)) ? 0 : parseInt(height)
     this.homeworldId = homeworldId
     this.homeworldName = homeworldName
-    await swPeople.create({ id: this.id, name: this.name, mass: this.mass, height: this.height, homeworld_id: this.homeworldId, homeworld_name: this.homeworldName })
+    await swPeople.create({
+      id: this.id,
+      name: this.name,
+      mass: this.mass,
+      height: this.height,
+      homeworld_id: this.homeworldId,
+      homeworld_name: this.homeworldName
+    })
   }
 }
 

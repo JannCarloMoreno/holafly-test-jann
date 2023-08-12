@@ -1,5 +1,6 @@
+const { param, validationResult } = require('express-validator')
+
 const {
-  TEST,
   GET_PEOPLE,
   GET_PLANET,
   GET_WEIGHT_ON_PLANET_RANDOM,
@@ -25,16 +26,21 @@ const _getPlanetId = (url) => url.split('/')[5]
 
 const _getRandomInt = max => Math.floor(Math.random() * max)
 
+const _sendErrorIfValidationFails = (req, errorMessage = 'validation fails') => {
+  const result = validationResult(req)
+  if (!result.isEmpty()) {
+    const error = new Error(errorMessage)
+    error.status = 400
+    throw error
+  }
+}
+
 const applySwapiEndpoints = (server, app) => {
   server = asyncServer(server)
-  server.get(TEST, async (req, res) => {
-    const data = await app.swapiFunctions.genericRequest(_supportWookieFormat(BASE_URL, req), HTTP_METHODS.GET, null, true)
-    res.send(data)
-  })
 
-  server.get(`${GET_PEOPLE}/:id`, async (req, res) => {
-    const id = req?.params?.id
-    if (isNaN(parseInt(id))) return res.status(401).send('bad request')
+  server.get(`${GET_PEOPLE}/:id`, param('id').isInt(), async (req, res) => {
+    _sendErrorIfValidationFails(req, 'peopleId must be an integer')
+    const id = req.params.id
     const person = await peopleFactory(id, _isWookieeFormat(req) ? 'wookiee' : '')
     if (!person.name) {
       const data = await app.swapiFunctions.genericRequest(_supportWookieFormat(`${BASE_URL}${PEOPLE_URL}${id}`, req), HTTP_METHODS.GET, null, true)
@@ -50,9 +56,9 @@ const applySwapiEndpoints = (server, app) => {
     res.status(200).send({ name: person.name, mass: person.mass, height: person.height, homeworldId: person.homeworldId, homeworldName: person.homeworldName })
   })
 
-  server.get(`${GET_PLANET}/:id`, async (req, res) => {
-    const id = req?.params?.id
-    if (isNaN(parseInt(id))) return res.status(401).send('bad request')
+  server.get(`${GET_PLANET}/:id`, param('id').isInt(), async (req, res) => {
+    _sendErrorIfValidationFails(req, 'planetId must be an integer')
+    const id = req.params.id
     const planet = new Planet(id)
     await planet.init()
     if (!planet.name) {
