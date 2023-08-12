@@ -76,3 +76,4 @@ Las siguientes librerias fueron usadas para manejar el linteo de mensajes de com
  - [commitlint](https://commitlint.js.org/#/): linteo para mensajes de commit
  - [husky](https://typicode.github.io/husky/): librería para gestion de git hooks
  - [eslint](https://eslint.org): libreria para linteo de código y fijación de formato
+ - [express-validator](https://express-validator.github.io/docs): libreria para agregar validaciones a los parametros
