@@ -22,6 +22,8 @@ const _supportWookieFormat = (url, req) => url+(_isWookieeFormat(req)?WOOKIEE_FO
 
 const _getPlanetId = (url) => url.split('/')[5]
 
+const _getRandomInt = max => Math.floor(Math.random() * max)
+
 
 
 
@@ -63,7 +65,30 @@ const applySwapiEndpoints = (server, app) => {
     });
 
     server.get(GET_WEIGHT_ON_PLANET_RANDOM, async (req, res) => {
-        res.sendStatus(501);
+        const {count: countPeople} = await app.swapiFunctions.genericRequest(`${BASE_URL}${PEOPLE_URL}`, HTTP_METHODS.GET, null, true)
+        const {count: countPlanets} = await app.swapiFunctions.genericRequest(`${BASE_URL}${PLANET_URL}`, HTTP_METHODS.GET, null, true)
+        const randomPerson = _getRandomInt(countPeople)
+        const randomPlanet = _getRandomInt(countPlanets)
+        let person = await peopleFactory(randomPerson, _isWookieeFormat(req)?'wookiee':'')
+        if(!person.name){
+            const data = await app.swapiFunctions.genericRequest(_supportWookieFormat(`${BASE_URL}${PEOPLE_URL}${randomPerson}`, req), HTTP_METHODS.GET, null, true);
+            const homeworldId = _getPlanetId(data.homeworld)
+            const planet = new Planet(homeworldId)
+            await planet.init()
+            if(!planet.name){
+                const data = await app.swapiFunctions.genericRequest(`${BASE_URL}${PLANET_URL}${homeworldId}`, HTTP_METHODS.GET, null, true);
+                await planet.createInDb(data)
+            }
+            await person.createInDb({homeworldId, homeworldName: planet.name,...data})
+        }
+        let planet = new Planet(randomPlanet)
+        await planet.init()
+        if(!planet.name){
+            const data = await app.swapiFunctions.genericRequest(`${BASE_URL}${PLANET_URL}${randomPlanet}`, HTTP_METHODS.GET, null, true);
+            await planet.createInDb(data)
+        }
+        if(planet.id === person.homeworldId) return res.status(401).send("Bad luck, try again!")
+        res.send({weight: person.mass*planet.gravity, personMass: person.mass, gravity: planet.gravity})
     });
 
     server.get(GET_LOGS,async (req, res) => {
