@@ -46,7 +46,7 @@ const applySwapiEndpoints = (server, app) => {
   })
 
   server.get(GET_WEIGHT_ON_PLANET_RANDOM, async (req, res) => {
-    const { randomPerson, randomPlanet } = _getRandomPersonAndPlanet(app)
+    const { randomPerson, randomPlanet } = await _getRandomPersonAndPlanet(app)
     const person = await _getPerson(randomPerson, req, app)
     const planet = await _getPlanet(randomPlanet, app)
     if (planet.id === person.homeworldId) return res.status(401).send({ error: 'Bad luck, try again!' })
